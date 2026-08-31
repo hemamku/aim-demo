@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Weather App</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .weather {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>🌤 Weather Application</h1>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="city"
+            placeholder="Enter city e.g. Chennai"
+            required
+        >
+
+        <button type="submit">
+            Get Weather
+        </button>
+
+    </form>
+
+
+    {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+    {% endif %}
+
+
+    {% if weather %}
+
+        <div class="weather">
+
+            <h2>
+                {{ weather.city }},
+                {{ weather.country }}
+            </h2>
+
+            <h1>
+                {{ weather.temperature }} °C
+            </h1>
+
+            <p>
+                <strong>Condition:</strong>
+                {{ weather.description }}
+            </p>
+
+            <p>
+                <strong>Feels Like:</strong>
+                {{ weather.feels_like }} °C
+            </p>
+
+            <p>
+                <strong>Humidity:</strong>
+                {{ weather.humidity }} %
+            </p>
+
+            <p>
+                <strong>Pressure:</strong>
+                {{ weather.pressure }} hPa
+            </p>
+
+            <p>
+                <strong>Wind Speed:</strong>
+                {{ weather.wind_speed }} m/s
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</body>
+
+</html>
