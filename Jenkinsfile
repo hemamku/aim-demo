@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     stages {
@@ -12,13 +11,14 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'python -m pip install -r requirements.txt'
+                echo 'Application source code checked out successfully.'
+                echo 'Python dependencies will be installed inside the Docker image.'
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t weather-app:%BUILD_NUMBER% .'
+                sh 'docker build -t weather-app:latest .'
             }
         }
     }
