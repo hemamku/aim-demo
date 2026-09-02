@@ -12,13 +12,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                bat 'python -m pip install -r requirements.txt'
+                sh 'python -m pip install -r requirements.txt'
             }
         }
 
         stage('Docker Build') {
             steps {
-                bat 'docker build -t weather-app:%BUILD_NUMBER% .'
+                sh 'docker build -t weather-app:%BUILD_NUMBER% .'
             }
         }
     }
