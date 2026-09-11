@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: weather-app
-          image: weather-app:latest
+          image: weather-app:1.0
           imagePullPolicy: IfNotPresent
 
           ports:
