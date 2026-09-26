@@ -1,0 +1,51 @@
+$env:GOOGLE_CLOUD_PROJECT = "upsproj"
+$env:GOOGLE_CLOUD_LOCATION = "us-central1"
+$env:GOOGLE_GENAI_USE_VERTEXAI = "true"
+$env:WEAVIATE_API_KEY ="Your key"
+$env:WEAVIATE_URL = "https://ihjvkr8tziluzqsixfra.c0.eu-central-1.aws.weaviate.cloud"
+$env:PYTHONPATH = "C:\Users\HEMA\OneDrive\Documents\RAG_deployment"
+
+
+
+To install embedding models in local:
+
+$secureKey = Read-Host "SmQ2T2k1K1B2hacnBCcGRTb2VqZVBpUlRIbFVGS2p4MitzMUFldVVUZE1FcElZPV92MjAw
+pip install "sentence-transformers==3.4.1"
+pip install "huggingface_hub==0.36.2" --force-reinstall --no-deps
+python -c "from huggingface_hub import snapshot_download; print(snapshot_download('sentence-transformers/all-MiniLM-L6-v2', local_dir='models/all-MiniLM-L6-v2'))"
+dir models\all-MiniLM-L6-v2
+
+$env:PYTHONPATH="C:\Users\HEMA\OneDrive\Documents\RAG_deployment"
+python weaviate_ingest.py --docs-dir docs --collection document_knowledge --weaviate-url "https://ihjvkr8tziluzqsixfra.c0.eu-central.weaviate.cloud" --weaviate-api-key "SmQ2T2k1K1BXbEJqbHB6QV9ZYzBxd2hacnBCcGRTb2VqZVBpUlRIbFVGS2p4MitzMUFldVVUZE1FcElZPV92MjAw"
+
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2"
+
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\huggingface\hub\models--sentence-transformers--all-MiniLM-L6-v2"
+
+
+Phoenix-server demo:
+$PROJECT_ID="YOUR_PROJECT_ID"
+$REGION="us-central1"
+
+$PROJECT_ID="upsproj"
+$REGION="us-central1"
+$BUILD_SA="1044850812012-compute@developer.gserviceaccount.com"
+
+gcloud projects add-iam-policy-binding $PROJECT_ID `
+  --member="serviceAccount:$BUILD_SA" `
+  --role="roles/run.builder"
+
+gcloud storage buckets add-iam-policy-binding `
+  "gs://run-sources-$PROJECT_ID-$REGION" `
+  --member="serviceAccount:$BUILD_SA" `
+  --role="roles/storage.objectViewer"
+
+gcloud run deploy phoenix-demo `
+  --source .\phoenix-demo `
+  --region $REGION `
+  --allow-unauthenticated `
+  --memory 2Gi `
+  --min-instances 1 `
+  --max-instances 1
+
+https://phoenix-demo-xxxxx-uc.a.run.app
